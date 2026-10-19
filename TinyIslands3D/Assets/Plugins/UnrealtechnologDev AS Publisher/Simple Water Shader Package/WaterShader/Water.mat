@@ -82,15 +82,15 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Scale: 5
-    - _ShoreFoamAmount: 0.31
-    - _ShoreFoamSpeed: 0.004
+    - _ShoreFoamAmount: 1
+    - _ShoreFoamSpeed: 0.1
     - _ShoreFoamTreshhold: 0.62
     - _Test: 1
     - _Transparency: 2.32
     - _Treshhold: 0.53
-    - _WaterFoamAmount: 0.17
+    - _WaterFoamAmount: 0.2
     - _WaterFoamSpeed: 0.01
-    - _WaveIntensity: 0.03
+    - _WaveIntensity: 0.549
     - _WavesSpeed: 83.5
     - _WindQuality: 0
     m_Colors:
