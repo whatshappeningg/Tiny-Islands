@@ -90,7 +90,7 @@ Material:
     - _Treshhold: 0.53
     - _WaterFoamAmount: 0.2
     - _WaterFoamSpeed: 0.01
-    - _WaveIntensity: 0.15
+    - _WaveIntensity: 0.14
     - _WavesSpeed: 83.5
     - _WindQuality: 0
     m_Colors:
