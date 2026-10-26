@@ -54,6 +54,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raftSpeed: 8
   rotationSpeed: 30
+  dashSpeedMultiplier: 2
+  dashDuration: 1.5
+  extraFOV: 10
 --- !u!65 &5632135446360663416
 BoxCollider:
   m_ObjectHideFlags: 0
