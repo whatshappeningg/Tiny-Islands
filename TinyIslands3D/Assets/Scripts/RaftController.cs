@@ -19,6 +19,7 @@ public class RaftController : MonoBehaviour
 
 	private bool isDashing = false;
 	private float currentSpeed;
+	private float limitHeight;
 
 	private Camera mainCamera;
 
@@ -29,6 +30,7 @@ public class RaftController : MonoBehaviour
 	{
 		mainCamera = Camera.main;
 		currentSpeed = raftSpeed;
+		limitHeight = transform.position.y;
 	}
 
 	void Start()
@@ -45,11 +47,18 @@ public class RaftController : MonoBehaviour
 
 		transform.Rotate(0f, turn * rotationSpeed * Time.deltaTime, 0f);
 		transform.Translate(currentSpeed * Time.deltaTime * Vector3.forward);
+		//transform.position = new Vector3(transform.position.x, limitHeight, transform.position.z);
 
 		if (Input.GetKeyDown(KeyCode.LeftControl))
 		{
 			Dash();
 		}
+	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Terrain"))
+			currentSpeed = raftSpeed * 0.5f;
 	}
 
 	#endregion
