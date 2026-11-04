@@ -8,6 +8,7 @@ public class RaftController : MonoBehaviour
 	#endregion
 
 	#region Fields
+
 	[Header("Movement Settings")]
 	[SerializeField] private float raftSpeed = 8f;
 	[SerializeField] private float rotationSpeed = 30f;
@@ -20,15 +21,14 @@ public class RaftController : MonoBehaviour
 	private bool isDashing = false;
 	private float currentSpeed;
 	private float limitHeight;
-
-	private Camera mainCamera;
+	private Camera raftCamera;
 
 	#endregion
 
 	#region Unity Callbacks
 	void Awake()
 	{
-		mainCamera = Camera.main;
+		raftCamera = GetComponentInChildren<Camera>();
 		currentSpeed = raftSpeed;
 		limitHeight = transform.position.y;
 	}
@@ -57,8 +57,8 @@ public class RaftController : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject.CompareTag("Terrain"))
-			currentSpeed = raftSpeed * 0.5f;
+		//if (collision.gameObject.CompareTag("Terrain"))
+		//currentSpeed = raftSpeed * 0.5f;
 	}
 
 	#endregion
@@ -73,7 +73,7 @@ public class RaftController : MonoBehaviour
 		{
 			isDashing = true;
 			currentSpeed = raftSpeed * dashSpeedMultiplier;
-			mainCamera.DOFieldOfView(mainCamera.fieldOfView + extraFOV, dashDuration);
+			raftCamera.DOFieldOfView(raftCamera.fieldOfView + extraFOV, dashDuration);
 			Invoke(nameof(StopDash), dashDuration);
 		}
 	}
@@ -82,7 +82,7 @@ public class RaftController : MonoBehaviour
 	{
 		isDashing = false;
 		currentSpeed = raftSpeed;
-		mainCamera.DOFieldOfView(mainCamera.fieldOfView - extraFOV, dashDuration).SetEase(Ease.InOutSine);
+		raftCamera.DOFieldOfView(raftCamera.fieldOfView - extraFOV, dashDuration).SetEase(Ease.InOutSine);
 	}
 	#endregion
 
