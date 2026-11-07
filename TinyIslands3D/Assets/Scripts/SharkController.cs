@@ -11,7 +11,7 @@ public class SharkController : MonoBehaviour
 
 	#region Fields
 	[Header("Shark Settings")]
-	[SerializeField] private float _sharkSpeed = 7f;
+	[SerializeField] private float _sharkSpeed = 9f;
 	[SerializeField] private float _chaseDistance = 60f;
 	[SerializeField] private float _attackDistance = 8f;
 	[SerializeField] private float _movementRadius = 200f;
@@ -74,10 +74,11 @@ public class SharkController : MonoBehaviour
 		_isChasing = false;
 		_isAttacking = false;
 
+		_agent.speed = _sharkSpeed;
+
 		if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
 		{
 			_agent.SetDestination(FindRandomDestination(_movementRadius));
-			_agent.speed = _sharkSpeed;
 		}
 
 		Debug.Log("Moving Shark");
@@ -88,7 +89,8 @@ public class SharkController : MonoBehaviour
 		_isChasing = true;
 
 		_agent.destination = _raft.transform.position;
-		_agent.speed += 0.5f * Time.deltaTime;
+		_agent.speed += 0.2f * Time.deltaTime;
+		_agent.speed = Mathf.Clamp(_agent.speed, _sharkSpeed, 10f);
 
 		Debug.Log("Shark chasing");
 	}
@@ -96,6 +98,7 @@ public class SharkController : MonoBehaviour
 	private void Attack()
 	{
 		_isAttacking = true;
+		_agent.speed = 0f;
 
 		//_agent.isStopped = true;
 

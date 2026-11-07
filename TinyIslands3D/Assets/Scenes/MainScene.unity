@@ -1390,7 +1390,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8224544348940634794, guid: 80de0e4a83a53d4468411d511cba3cb5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224544348940634794, guid: 80de0e4a83a53d4468411d511cba3cb5, type: 3}
+      propertyPath: raftSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8224544348940634794, guid: 80de0e4a83a53d4468411d511cba3cb5, type: 3}
       propertyPath: raftCamera
