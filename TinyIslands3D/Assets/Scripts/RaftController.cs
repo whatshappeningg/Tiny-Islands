@@ -9,7 +9,7 @@ public class RaftController : MonoBehaviour
 
 	#region Fields
 
-	[Header("Movement Settings")]
+	[Header("Basic Settings")]
 	[SerializeField] private float raftSpeed = 8f;
 	[SerializeField] private float rotationSpeed = 30f;
 
@@ -18,9 +18,9 @@ public class RaftController : MonoBehaviour
 	[SerializeField] private float dashDuration = 1.5f;
 	[SerializeField] private float extraFOV = 10f;
 
-	private bool isDashing = false;
 	private float currentSpeed;
 	private float limitHeight;
+	private bool isDashing = false;
 	private Camera raftCamera;
 
 	#endregion
@@ -55,11 +55,6 @@ public class RaftController : MonoBehaviour
 		}
 	}
 
-	void OnCollisionEnter(Collision collision)
-	{
-		//if (collision.gameObject.CompareTag("Terrain"))
-		//currentSpeed = raftSpeed * 0.5f;
-	}
 
 	#endregion
 

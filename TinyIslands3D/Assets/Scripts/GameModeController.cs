@@ -17,6 +17,8 @@ public class GameModeController : MonoBehaviour
 	private ThirdPersonController _playerController;
 	private RaftController _raftController;
 
+	private RaftSensors _raftSensors;
+
 	#endregion
 
 	#region Unity Callbacks
@@ -27,6 +29,8 @@ public class GameModeController : MonoBehaviour
 
 		_playerController = _player.GetComponent<ThirdPersonController>();
 		_raftController = _raft.GetComponent<RaftController>();
+
+		_raftSensors = _raft.GetComponent<RaftSensors>();
 
 	}
 
@@ -44,7 +48,8 @@ public class GameModeController : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			SwitchGameMode();
+			if (_raftSensors.IsPlayerInAccessArea)
+				SwitchGameMode();
 
 		}
 
