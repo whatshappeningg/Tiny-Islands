@@ -13,13 +13,14 @@ public class SharkController : MonoBehaviour
 	[Header("Shark Settings")]
 	[SerializeField] private float _sharkSpeed = 9f;
 	[SerializeField] private float _chaseDistance = 60f;
-	[SerializeField] private float _attackDistance = 8f;
+	[SerializeField] private float _attackDistance = 10f;
 	[SerializeField] private float _movementRadius = 200f;
 
 
 	private bool _isChasing = false;
 	private bool _isAttacking = false;
 	private GameObject _raft;
+	private Animator _animator;
 	private NavMeshAgent _agent;
 
 	#endregion
@@ -28,6 +29,7 @@ public class SharkController : MonoBehaviour
 	void Awake()
 	{
 		_raft = GameObject.FindGameObjectWithTag("Raft");
+		_animator = GetComponentInChildren<Animator>();
 		_agent = GetComponent<NavMeshAgent>();
 	}
 
@@ -74,6 +76,8 @@ public class SharkController : MonoBehaviour
 		_isChasing = false;
 		_isAttacking = false;
 
+		//_animator.SetBool("Attacking", false);
+
 		_agent.speed = _sharkSpeed;
 
 		if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
@@ -88,6 +92,8 @@ public class SharkController : MonoBehaviour
 	{
 		_isChasing = true;
 
+		_animator.SetBool("Attacking", false);
+
 		_agent.destination = _raft.transform.position;
 		_agent.speed += 0.2f * Time.deltaTime;
 		_agent.speed = Mathf.Clamp(_agent.speed, _sharkSpeed, 10f);
@@ -98,9 +104,9 @@ public class SharkController : MonoBehaviour
 	private void Attack()
 	{
 		_isAttacking = true;
-		_agent.speed = 0f;
 
-		//_agent.isStopped = true;
+		_animator.SetBool("Attacking", true);
+		_agent.speed = 0f;
 
 		Debug.Log("Shark Attacking");
 	}
