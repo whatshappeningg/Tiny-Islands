@@ -12,6 +12,7 @@ public class RaftController : MonoBehaviour
 	[Header("Basic Settings")]
 	[SerializeField] private float raftSpeed = 8f;
 	[SerializeField] private float rotationSpeed = 30f;
+	[SerializeField] private LayerMask islandLayer;
 
 	[Header("Dash Settings")]
 	[SerializeField] private float dashSpeedMultiplier = 2f;
@@ -19,8 +20,9 @@ public class RaftController : MonoBehaviour
 	[SerializeField] private float extraFOV = 10f;
 
 	private float currentSpeed;
-	private float limitHeight;
+	private float step;
 	private bool isDashing = false;
+	private readonly float raftRadius = 3f;
 	private Camera raftCamera;
 
 	#endregion
@@ -30,7 +32,6 @@ public class RaftController : MonoBehaviour
 	{
 		raftCamera = GetComponentInChildren<Camera>();
 		currentSpeed = raftSpeed;
-		limitHeight = transform.position.y;
 	}
 
 	void Start()
@@ -46,15 +47,19 @@ public class RaftController : MonoBehaviour
 		if (Mathf.Abs(turn) < 0.1f) turn = 0f;
 
 		transform.Rotate(0f, turn * rotationSpeed * Time.deltaTime, 0f);
-		transform.Translate(currentSpeed * Time.deltaTime * Vector3.forward);
-		//transform.position = new Vector3(transform.position.x, limitHeight, transform.position.z);
+
+		step = currentSpeed * Time.deltaTime;
+
+		if (!IsIslandDetected())
+		{
+			transform.Translate(step * Vector3.forward);
+		}
 
 		if (Input.GetKeyDown(KeyCode.LeftControl))
 		{
 			Dash();
 		}
 	}
-
 
 	#endregion
 
@@ -78,6 +83,10 @@ public class RaftController : MonoBehaviour
 		isDashing = false;
 		currentSpeed = raftSpeed;
 		raftCamera.DOFieldOfView(raftCamera.fieldOfView - extraFOV, dashDuration).SetEase(Ease.InOutSine);
+	}
+	private bool IsIslandDetected()
+	{
+		return Physics.SphereCast(transform.position + Vector3.up * 0.3f, raftRadius, transform.forward, out _, step + 0.3f, islandLayer);
 	}
 	#endregion
 

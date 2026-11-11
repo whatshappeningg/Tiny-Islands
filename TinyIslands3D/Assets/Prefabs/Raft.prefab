@@ -52,6 +52,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raftSpeed: 10
   rotationSpeed: 30
+  islandLayer:
+    serializedVersion: 2
+    m_Bits: 8
   dashSpeedMultiplier: 2
   dashDuration: 1.5
   extraFOV: 10
