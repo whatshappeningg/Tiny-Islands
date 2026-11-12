@@ -7,15 +7,21 @@ using UnityEngine.AI;
 public class SharkController : MonoBehaviour
 {
 	#region Properties
+	public event Action<float> OnAttack;
+
 	#endregion
 
 	#region Fields
-	[Header("Shark Settings")]
+	[Header("Shark Movement Settings")]
 	[SerializeField] private float _sharkSpeed = 9f;
 	[SerializeField] private float _chaseDistance = 60f;
 	[SerializeField] private float _attackDistance = 10f;
 	[SerializeField] private float _movementRadius = 200f;
 
+	[Header("Shark Attack Settings")]
+	[SerializeField] private float _attackDamage = 5f;
+	[SerializeField] private float _attackCooldown = 2f;
+	private float _currentAttackCooldown = 0f;
 
 	private bool _isChasing = false;
 	private bool _isAttacking = false;
@@ -43,15 +49,15 @@ public class SharkController : MonoBehaviour
 		if (Vector3.Distance(transform.position, _raft.transform.position) < _chaseDistance
 			&& Vector3.Distance(transform.position, _raft.transform.position) > _attackDistance)
 		{
-			Chase();
+			ChaseMode();
 		}
 		if (Vector3.Distance(transform.position, _raft.transform.position) < _attackDistance)
 		{
-			Attack();
+			AttackMode();
 		}
 		if (Vector3.Distance(transform.position, _raft.transform.position) > _chaseDistance)
 		{
-			Move();
+			MovingMode();
 		}
 
 	}
@@ -71,7 +77,7 @@ public class SharkController : MonoBehaviour
 	#endregion
 
 	#region Private Methods
-	private void Move()
+	private void MovingMode()
 	{
 		_isChasing = false;
 		_isAttacking = false;
@@ -88,7 +94,7 @@ public class SharkController : MonoBehaviour
 		Debug.Log("Moving Shark");
 	}
 
-	private void Chase()
+	private void ChaseMode()
 	{
 		_isChasing = true;
 
@@ -101,14 +107,26 @@ public class SharkController : MonoBehaviour
 		Debug.Log("Shark chasing");
 	}
 
-	private void Attack()
+	private void AttackMode()
 	{
 		_isAttacking = true;
 
 		_animator.SetBool("Attacking", true);
 		_agent.speed = 0f;
 
+		Attack();
+
 		Debug.Log("Shark Attacking");
+	}
+
+	private void Attack()
+	{
+		_currentAttackCooldown += Time.deltaTime;
+		if (_currentAttackCooldown >= _attackCooldown)
+		{
+			_currentAttackCooldown = 0f;
+			OnAttack?.Invoke(_attackDamage);
+		}
 	}
 
 	private Vector3 FindRandomDestination(float radius)
