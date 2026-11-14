@@ -7,8 +7,11 @@ public class CannonController : MonoBehaviour
 	#endregion
 
 	#region Fields
+	[Header("Target Settings")]
+	[SerializeField] private Transform _impactPoint;
+	[Header("Cannon Settings")]
 	[SerializeField] private Transform _cannonball;
-	[SerializeField] private Transform _targetPos;
+	[SerializeField] private ParticleSystem _smokeParticles;
 
 	private readonly float _arcHeight = 5f;
 	private readonly float _flightTime = 1.5f;
@@ -21,6 +24,10 @@ public class CannonController : MonoBehaviour
 	void Awake()
 	{
 		ballStartLocalPos = _cannonball.localPosition;
+	}
+	void Start()
+	{
+		_cannonball.gameObject.SetActive(false);
 	}
 
 	void Update()
@@ -38,14 +45,16 @@ public class CannonController : MonoBehaviour
 	{
 		_cannonball.gameObject.SetActive(true);
 
-		_cannonball.DOJump(_targetPos.position, _arcHeight, 1, _flightTime)
+		_smokeParticles.Play();
+
+		_cannonball.DOJump(_impactPoint.position, _arcHeight, 1, _flightTime)
 			.SetEase(Ease.Linear)
 			.SetLink(_cannonball.gameObject)
 			.OnComplete(() =>
 			{
 				_cannonball.gameObject.SetActive(false);
 				_cannonball.localPosition = ballStartLocalPos;
-				_canFire = false;
+				//_canFire = false;
 			});
 	}
 	#endregion
