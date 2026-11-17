@@ -9,6 +9,8 @@ public class EventSystem : MonoBehaviour
 	#region Fields
 	[SerializeField] private RaftSensors _raft;
 	[SerializeField] private SharkController _shark;
+	[SerializeField] private GameModeController _gameModeController;
+
 
 	#endregion
 
@@ -16,6 +18,7 @@ public class EventSystem : MonoBehaviour
 	void Start()
 	{
 		_shark.OnAttack += OnTakeDamage;
+		_raft.OnChangeGameMode += OnChangeGameMode;
 
 	}
 
@@ -28,6 +31,10 @@ public class EventSystem : MonoBehaviour
 	private void OnTakeDamage(float damage)
 	{
 		_raft.TakeDamage(damage);
+	}
+	private void OnChangeGameMode()
+	{
+		_gameModeController.SwitchGameMode();
 	}
 
 	#endregion

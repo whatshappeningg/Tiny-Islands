@@ -1,10 +1,10 @@
 using UnityEngine;
 using System;
 
-public class RaftSensors : MonoBehaviour
+public class RaftSensors : MonoBehaviour, IInteractable
 {
 	#region Properties
-	public bool IsPlayerInAccessArea => _isPlayerInAccessArea;
+	public event Action OnChangeGameMode;
 	public float CurrentHealth
 	{
 		get
@@ -32,28 +32,12 @@ public class RaftSensors : MonoBehaviour
 	private readonly float _accessAreaRadius = 5f;
 	[SerializeField] private float _maxHealth = 100f;
 	[SerializeField] private float _currentHealth;
-	[SerializeField] private bool _isPlayerInAccessArea = false;
-
 	#endregion
 
 	#region Unity Callbacks
 	void Awake()
 	{
 		_currentHealth = _maxHealth;
-	}
-	void OnTriggerEnter(Collider other)
-	{
-		if (other.CompareTag("Player"))
-		{
-			_isPlayerInAccessArea = true;
-		}
-	}
-	void OnTriggerExit(Collider other)
-	{
-		if (other.CompareTag("Player"))
-		{
-			_isPlayerInAccessArea = false;
-		}
 	}
 
 	private void OnDrawGizmosSelected()
@@ -66,6 +50,19 @@ public class RaftSensors : MonoBehaviour
 	#endregion
 
 	#region Public Methods
+	public void Interact()
+	{
+		OnChangeGameMode?.Invoke();
+	}
+	public InteractableInfo GetInfo()
+	{
+		InteractableInfo info = new()
+		{
+			Action = "enter",
+			Type = "raft"
+		};
+		return info;
+	}
 	public void TakeDamage(float damage)
 	{
 		_currentHealth -= damage;

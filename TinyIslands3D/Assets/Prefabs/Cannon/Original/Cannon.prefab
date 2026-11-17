@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4585365590078641349}
   - component: {fileID: 3089358142140848732}
+  - component: {fileID: 2885961790910077498}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -47,9 +48,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18100029815aa149a4566f72228b111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPos: {fileID: 0}
+  _impactPoint: {fileID: 0}
   _cannonball: {fileID: 7535097769009726137}
   _smokeParticles: {fileID: 2757952435247802351}
+--- !u!136 &2885961790910077498
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4314622073324654999}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.4421868
+  m_Height: 5
+  m_Direction: 2
+  m_Center: {x: 0.037439346, y: 0.270638, z: 0.27035046}
 --- !u!1001 &7449850209116508367
 PrefabInstance:
   m_ObjectHideFlags: 0

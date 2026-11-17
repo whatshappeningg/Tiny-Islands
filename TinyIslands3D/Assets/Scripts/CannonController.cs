@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class CannonController : MonoBehaviour
+public class CannonController : MonoBehaviour, IInteractable
 {
 	#region Properties
 	#endregion
@@ -30,18 +30,27 @@ public class CannonController : MonoBehaviour
 		_cannonball.gameObject.SetActive(false);
 	}
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			if (_canFire) Fire();
-			else Debug.Log("Already been fired!");
-		}
-	}
 	#endregion
 
 	#region Public Methods
-	public void Fire()
+	public InteractableInfo GetInfo()
+	{
+		InteractableInfo info = new()
+		{
+			Action = "fire",
+			Type = "cannon"
+		};
+		return info;
+	}
+	public void Interact()
+	{
+		if (_canFire) Fire();
+		else Debug.Log("Already been fired!");
+	}
+	#endregion
+
+	#region Private Methods
+	private void Fire()
 	{
 		_cannonball.gameObject.SetActive(true);
 
@@ -57,8 +66,5 @@ public class CannonController : MonoBehaviour
 				//_canFire = false;
 			});
 	}
-	#endregion
-
-	#region Private Methods
 	#endregion
 }

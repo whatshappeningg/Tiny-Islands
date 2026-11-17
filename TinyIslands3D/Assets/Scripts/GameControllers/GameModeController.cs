@@ -19,7 +19,6 @@ public class GameModeController : MonoBehaviour
 	private Animator _playerAnimator;
 
 	private RaftController _raftController;
-	private RaftSensors _raftSensors;
 
 	private bool _isPlayerInRaft = false;
 
@@ -36,9 +35,6 @@ public class GameModeController : MonoBehaviour
 		_playerAnimator = _player.GetComponent<Animator>();
 
 		_raftController = _raft.GetComponent<RaftController>();
-
-		_raftSensors = _raft.GetComponent<RaftSensors>();
-
 	}
 
 	void Start()
@@ -53,22 +49,19 @@ public class GameModeController : MonoBehaviour
 
 	}
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			if (_raftSensors.IsPlayerInAccessArea)
-				SwitchGameMode();
-		}
+	// void Update()
+	// {
+	// 	if (Input.GetKeyDown(KeyCode.E))
+	// 	{
+	// 		if (_raftSensors.IsPlayerInAccessArea)
+	// 			SwitchGameMode();
+	// 	}
 
-	}
+	// }
 	#endregion
 
 	#region Public Methods
-	#endregion
-
-	#region Private Methods
-	private void SwitchGameMode()
+	public void SwitchGameMode()
 	{
 		_playerCamera.SetActive(!_playerCamera.activeSelf);
 		_raftCamera.SetActive(!_raftCamera.activeSelf);
@@ -94,6 +87,9 @@ public class GameModeController : MonoBehaviour
 			_playerAnimator.SetBool("Sitting", false);
 		}
 	}
+	#endregion
+
+	#region Private Methods
 
 	#endregion
 
