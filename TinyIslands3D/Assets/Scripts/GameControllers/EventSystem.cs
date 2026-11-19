@@ -11,7 +11,6 @@ public class EventSystem : MonoBehaviour
 	[SerializeField] private SharkController _shark;
 	[SerializeField] private GameModeController _gameModeController;
 
-
 	#endregion
 
 	#region Unity Callbacks

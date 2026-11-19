@@ -11,6 +11,8 @@ public class GameModeController : MonoBehaviour
 	[Header("Game Modes")]
 	[SerializeField] private GameObject _player;
 	[SerializeField] private GameObject _raft;
+	[SerializeField] private InteractionSystem _interactionSystem;
+
 
 	private GameObject _playerCamera;
 	private GameObject _raftCamera;
@@ -49,15 +51,6 @@ public class GameModeController : MonoBehaviour
 
 	}
 
-	// void Update()
-	// {
-	// 	if (Input.GetKeyDown(KeyCode.E))
-	// 	{
-	// 		if (_raftSensors.IsPlayerInAccessArea)
-	// 			SwitchGameMode();
-	// 	}
-
-	// }
 	#endregion
 
 	#region Public Methods
@@ -70,6 +63,7 @@ public class GameModeController : MonoBehaviour
 		_playerCharacterController.enabled = !_playerCharacterController.enabled;
 
 		_raftController.enabled = !_raftController.enabled;
+		_interactionSystem.enabled = false;
 
 		_isPlayerInRaft = !_isPlayerInRaft;
 
@@ -86,10 +80,16 @@ public class GameModeController : MonoBehaviour
 			_player.transform.SetParent(null);
 			_playerAnimator.SetBool("Sitting", false);
 		}
+
+		Invoke(nameof(EnableInteraction), 0.5f);
 	}
 	#endregion
 
 	#region Private Methods
+	private void EnableInteraction()
+	{
+		_interactionSystem.enabled = true;
+	}
 
 	#endregion
 

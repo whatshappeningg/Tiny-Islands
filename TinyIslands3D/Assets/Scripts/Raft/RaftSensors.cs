@@ -5,6 +5,7 @@ public class RaftSensors : MonoBehaviour, IInteractable
 {
 	#region Properties
 	public event Action OnChangeGameMode;
+	public event Action<float> OnHealthChanged;
 	public float CurrentHealth
 	{
 		get
@@ -25,13 +26,12 @@ public class RaftSensors : MonoBehaviour, IInteractable
 				_currentHealth = _maxHealth;
 		}
 	}
-	public event Action<float> OnHealthChanged;
 	#endregion
 
 	#region Fields
-	private readonly float _accessAreaRadius = 5f;
 	[SerializeField] private float _maxHealth = 100f;
 	[SerializeField] private float _currentHealth;
+
 	#endregion
 
 	#region Unity Callbacks
@@ -39,14 +39,6 @@ public class RaftSensors : MonoBehaviour, IInteractable
 	{
 		_currentHealth = _maxHealth;
 	}
-
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.green;
-		Gizmos.DrawWireSphere(transform.position, _accessAreaRadius);
-
-	}
-
 	#endregion
 
 	#region Public Methods

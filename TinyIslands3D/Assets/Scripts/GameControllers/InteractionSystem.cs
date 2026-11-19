@@ -9,15 +9,15 @@ public class InteractionSystem : MonoBehaviour
     #endregion
 
     #region Fields
-    [SerializeField] float _widthDetector = 2f;     // radio de la esfera
-    [SerializeField] float _distanceDetector = 3f;    // alcance desde el player
-    [SerializeField] float _originHeight = 1f;        // altura del pecho del player
+    [SerializeField] float _widthDetector = 2f;
+    [SerializeField] float _distanceDetector = 3f;
+    [SerializeField] float _originHeight = 1f;
     [SerializeField] Inventory _inventory;
     private bool _interactebleDetected = false;
     private IInteractable _currentInteraction;
     #endregion
 
-    #region Unity Callbacks		
+    #region Unity Callbacks
     private void Update()
     {
         if (_interactebleDetected && Input.GetKeyUp(KeyCode.E))
@@ -29,48 +29,85 @@ public class InteractionSystem : MonoBehaviour
             }
             else
             {
-                Debug.Log("Interacting with: " + _currentInteraction.GetInfo().Type);
                 _currentInteraction.Interact();
             }
         }
     }
+
     void FixedUpdate()
     {
-        Vector3 origin = transform.position + Vector3.up * _originHeight;
+        IInteractable closest = FindClosestInteractable();
 
-        if (Physics.SphereCast(origin, _widthDetector, transform.forward, out RaycastHit hit, _distanceDetector))
+        if (closest != null)
         {
-            IInteractable interaction = hit.collider.GetComponent<IInteractable>();
-            if (interaction != null)
-            {
-                InteractableInfo info = interaction.GetInfo();
-                OnShowInteraction?.Invoke("E - To " + info.Action + " " + info.Type);
-                Debug.Log("E - To " + info.Action + " " + info.Type);
-                _interactebleDetected = true;
-                _currentInteraction = interaction;
-                return;
-            }
+            InteractableInfo info = closest.GetInfo();
+            OnShowInteraction?.Invoke("E - To " + info.Action + " " + info.Type);
+            Debug.Log("E - To " + info.Action + " " + info.Type);
+            _interactebleDetected = true;
+            _currentInteraction = closest;
+            return;
         }
 
+        if (_interactebleDetected)
+        {
+            _interactebleDetected = false;
+            _currentInteraction = null;
+            OnHideInteraction?.Invoke();
+        }
+    }
+
+    private void OnDisable()
+    {
         _interactebleDetected = false;
-        OnHideInteraction?.Invoke();
+        _currentInteraction = null;
     }
     #endregion
 
     #region Public Methods
+    public void ShowCustomMessage(string message)
+    {
+        OnShowInteraction?.Invoke(message);
+    }
+
+    public void HideMessage()
+    {
+        OnHideInteraction?.Invoke();
+    }
     #endregion
 
     #region Private Methods
+    private Vector3 GetDetectionCenter()
+    {
+        return transform.position + Vector3.up * _originHeight + transform.forward * _distanceDetector;
+    }
+
+    private IInteractable FindClosestInteractable()
+    {
+        Collider[] hits = Physics.OverlapSphere(GetDetectionCenter(), _widthDetector);
+
+        IInteractable closest = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider hit in hits)
+        {
+            IInteractable interactable = hit.GetComponentInParent<IInteractable>();
+            if (interactable == null) continue;
+
+            float distance = (hit.transform.position - transform.position).sqrMagnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = interactable;
+            }
+        }
+
+        return closest;
+    }
     #endregion
 
     void OnDrawGizmos()
     {
-        Vector3 origin = transform.position + Vector3.up * _originHeight;
-        Vector3 end = origin + transform.forward * _distanceDetector;
-
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(origin, _widthDetector);
-        Gizmos.DrawWireSphere(end, _widthDetector);
-        Gizmos.DrawLine(origin, end);
+        Gizmos.DrawWireSphere(GetDetectionCenter(), _widthDetector);
     }
 }

@@ -441,6 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1488218635}
   _raft: {fileID: 145938421}
+  _interactionSystem: {fileID: 1498916551}
 --- !u!4 &658687358
 Transform:
   m_ObjectHideFlags: 0
@@ -1057,6 +1058,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8470788607519892552, guid: 5d2f84e7c71bfb84abd6bd1d232b7692, type: 3}
   m_PrefabInstance: {fileID: 2780659909126697514}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1498916551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3711869642437202905, guid: 5d2f84e7c71bfb84abd6bd1d232b7692, type: 3}
+  m_PrefabInstance: {fileID: 2780659909126697514}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488218635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9669fa5211c9ec49a08673f7c8669de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1762216701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1328,6 +1340,10 @@ PrefabInstance:
     - target: {fileID: 5402274149588948424, guid: b93229008a2265442b33198d0e0d7c67, type: 3}
       propertyPath: m_Name
       value: Shark
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402274149588948424, guid: b93229008a2265442b33198d0e0d7c67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
