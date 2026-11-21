@@ -12,7 +12,11 @@ public class RaftController : MonoBehaviour
 	[Header("Basic Settings")]
 	[SerializeField] private float raftSpeed = 8f;
 	[SerializeField] private float rotationSpeed = 30f;
+
+	[Header("Obstacle Layers")]
 	[SerializeField] private LayerMask islandLayer;
+	[SerializeField] private LayerMask rockLayer;
+
 
 	[Header("Dash Settings")]
 	[SerializeField] private float dashSpeedMultiplier = 2f;
@@ -50,7 +54,7 @@ public class RaftController : MonoBehaviour
 
 		step = currentSpeed * Time.deltaTime;
 
-		if (!IsIslandDetected())
+		if (!IsObstacleDetected())
 		{
 			transform.Translate(step * Vector3.forward);
 		}
@@ -84,9 +88,10 @@ public class RaftController : MonoBehaviour
 		currentSpeed = raftSpeed;
 		raftCamera.DOFieldOfView(raftCamera.fieldOfView - extraFOV, dashDuration).SetEase(Ease.InOutSine);
 	}
-	private bool IsIslandDetected()
+	private bool IsObstacleDetected()
 	{
-		return Physics.SphereCast(transform.position + Vector3.up * 0.3f, raftRadius, transform.forward, out _, step + 0.3f, islandLayer);
+		return Physics.SphereCast(transform.position + Vector3.up * 0.3f, raftRadius, transform.forward, out _, step + 0.3f, islandLayer)
+			|| Physics.SphereCast(transform.position + Vector3.up * 0.3f, raftRadius, transform.forward, out _, step + 0.3f, rockLayer);
 	}
 	#endregion
 

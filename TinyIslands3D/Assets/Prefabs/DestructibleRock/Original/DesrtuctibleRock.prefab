@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 801145627170451171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ImpactPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1524381518683962097}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ParticleSystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 8955768193081884756}
   - component: {fileID: 2986489737525544329}
   - component: {fileID: 1489400223751989949}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DesrtuctibleRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,6 +220,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 2053505126673990169, guid: e6e92a9ce3ce47746b56ad500b49fe2b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -287,6 +291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DestroyedRockParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 2053505126673990169, guid: 19dc7a3c7d052dd46b3beae5e92af457, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -353,6 +361,10 @@ PrefabInstance:
     - target: {fileID: 4985661309512949397, guid: ad01512f620188742856a91018ea9307, type: 3}
       propertyPath: m_Name
       value: DustParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985661309512949397, guid: ad01512f620188742856a91018ea9307, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
