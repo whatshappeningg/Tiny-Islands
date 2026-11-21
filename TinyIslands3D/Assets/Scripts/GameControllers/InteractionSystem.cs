@@ -25,6 +25,7 @@ public class InteractionSystem : MonoBehaviour
             if (_currentInteraction is Recolectable recolectable)
             {
                 _inventory.AddRecolectable(recolectable.Type, recolectable.Count);
+                Debug.Log($"Collected {recolectable.Count} {recolectable.Type}, interaction system");
                 recolectable.Interact();
             }
             else

@@ -8,7 +8,6 @@ public class RaftController : MonoBehaviour
 	#endregion
 
 	#region Fields
-
 	[Header("Basic Settings")]
 	[SerializeField] private float raftSpeed = 8f;
 	[SerializeField] private float rotationSpeed = 30f;
