@@ -11,7 +11,7 @@ public class GameModeController : MonoBehaviour
 	[Header("Game Modes")]
 	[SerializeField] private GameObject _player;
 	[SerializeField] private GameObject _raft;
-	[SerializeField] private InteractionSystem _interactionSystem;
+	//[SerializeField] private InteractionSystem _interactionSystem;
 
 
 	private GameObject _playerCamera;
@@ -63,7 +63,7 @@ public class GameModeController : MonoBehaviour
 		_playerCharacterController.enabled = !_playerCharacterController.enabled;
 
 		_raftController.enabled = !_raftController.enabled;
-		_interactionSystem.enabled = false;
+		//_interactionSystem.enabled = false;
 
 		_isPlayerInRaft = !_isPlayerInRaft;
 
@@ -88,7 +88,7 @@ public class GameModeController : MonoBehaviour
 	#region Private Methods
 	private void EnableInteraction()
 	{
-		_interactionSystem.enabled = true;
+		//_interactionSystem.enabled = true;
 	}
 
 	#endregion

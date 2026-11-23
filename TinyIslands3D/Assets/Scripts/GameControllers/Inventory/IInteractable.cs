@@ -1,14 +1,36 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
 public interface IInteractable
 {
-    public void Interact();
-    public InteractableInfo GetInfo();
+    public ObjectType Type { get; }
+    public List<InteractionOption> Options { get; }
 }
 
-//MOver a otro archivo
 [System.Serializable]
-public class InteractableInfo
+public class InteractionOption
 {
-    public string Action;
-    public string Type;
+    public KeyCode Key;
+    public InteractionType Action;
+}
+
+[System.Serializable]
+public enum InteractionType
+{
+    collect,
+    fire,
+    repair,
+    embark,
+    disembark,
+}
+
+[System.Serializable]
+public enum ObjectType
+{
+    wood,
+    cannonball,
+    cannon,
+    raft,
 }
 

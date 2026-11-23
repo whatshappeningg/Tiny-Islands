@@ -503,7 +503,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1488218635}
   _raft: {fileID: 145938421}
-  _interactionSystem: {fileID: 1498916551}
 --- !u!4 &658687358
 Transform:
   m_ObjectHideFlags: 0
@@ -531,9 +530,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fae4dd888938540b69650e7f0dea48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _raft: {fileID: 7040349564224195430}
+  _raftSensors: {fileID: 7040349564224195430}
+  _cannon: {fileID: 3089358142140848732, guid: b0f23072bef40a144aa80dc497eccac0, type: 3}
   _shark: {fileID: 2561946991678494527}
   _gameModeController: {fileID: 658687357}
+  _interactionSystem: {fileID: 1498916551}
+  _inventory: {fileID: 658687360}
 --- !u!114 &658687360
 MonoBehaviour:
   m_ObjectHideFlags: 0

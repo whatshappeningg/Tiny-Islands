@@ -1,66 +1,67 @@
 using UnityEngine;
 using System;
+using System.Text;
 
 public class InteractionSystem : MonoBehaviour
 {
     #region Properties
     public event Action<string> OnShowInteraction;
     public event Action OnHideInteraction;
+
+    public event Action<IInteractable, InteractionOption> OnInteracted;
+
+    public IInteractable Current => _currentInteraction;
     #endregion
 
     #region Fields
     [SerializeField] float _widthDetector = 2f;
     [SerializeField] float _distanceDetector = 3f;
     [SerializeField] float _originHeight = 1f;
-    [SerializeField] Inventory _inventory;
-    private bool _interactebleDetected = false;
+
+    private const int MaxHits = 16;
+    private readonly Collider[] _hits = new Collider[MaxHits];
+    private readonly StringBuilder _builder = new();
+
     private IInteractable _currentInteraction;
     #endregion
 
     #region Unity Callbacks
     private void Update()
     {
-        if (_interactebleDetected && Input.GetKeyUp(KeyCode.E))
+        if (_currentInteraction == null) return;
+
+        foreach (InteractionOption option in _currentInteraction.Options)
         {
-            if (_currentInteraction is Recolectable recolectable)
+            if (Input.GetKeyUp(option.Key))
             {
-                _inventory.AddRecolectable(recolectable.Type, recolectable.Count);
-                Debug.Log($"Collected {recolectable.Count} {recolectable.Type}, interaction system");
-                recolectable.Interact();
-            }
-            else
-            {
-                _currentInteraction.Interact();
+                OnInteracted?.Invoke(_currentInteraction, option);
+                break;
             }
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         IInteractable closest = FindClosestInteractable();
 
-        if (closest != null)
-        {
-            InteractableInfo info = closest.GetInfo();
-            OnShowInteraction?.Invoke("E - To " + info.Action + " " + info.Type);
-            Debug.Log("E - To " + info.Action + " " + info.Type);
-            _interactebleDetected = true;
-            _currentInteraction = closest;
-            return;
-        }
+        if (ReferenceEquals(closest, _currentInteraction)) return;
 
-        if (_interactebleDetected)
-        {
-            _interactebleDetected = false;
-            _currentInteraction = null;
+        _currentInteraction = closest;
+
+        if (_currentInteraction != null)
+            //OnShowInteraction?.Invoke(BuildMessage(_currentInteraction));
+            Debug.Log(BuildMessage(_currentInteraction));
+        else
             OnHideInteraction?.Invoke();
-        }
     }
 
     private void OnDisable()
     {
-        _interactebleDetected = false;
-        _currentInteraction = null;
+        if (_currentInteraction != null)
+        {
+            _currentInteraction = null;
+            OnHideInteraction?.Invoke();
+        }
     }
     #endregion
 
@@ -74,6 +75,13 @@ public class InteractionSystem : MonoBehaviour
     {
         OnHideInteraction?.Invoke();
     }
+
+    // ??
+    public void RefreshMessage()
+    {
+        if (_currentInteraction != null)
+            OnShowInteraction?.Invoke(BuildMessage(_currentInteraction));
+    }
     #endregion
 
     #region Private Methods
@@ -84,17 +92,17 @@ public class InteractionSystem : MonoBehaviour
 
     private IInteractable FindClosestInteractable()
     {
-        Collider[] hits = Physics.OverlapSphere(GetDetectionCenter(), _widthDetector);
+        int count = Physics.OverlapSphereNonAlloc(GetDetectionCenter(), _widthDetector, _hits);
 
         IInteractable closest = null;
         float closestDistance = float.MaxValue;
 
-        foreach (Collider hit in hits)
+        for (int i = 0; i < count; i++)
         {
-            IInteractable interactable = hit.GetComponentInParent<IInteractable>();
+            IInteractable interactable = _hits[i].GetComponentInParent<IInteractable>();
             if (interactable == null) continue;
 
-            float distance = (hit.transform.position - transform.position).sqrMagnitude;
+            float distance = (_hits[i].transform.position - transform.position).sqrMagnitude;
             if (distance < closestDistance)
             {
                 closestDistance = distance;
@@ -103,6 +111,20 @@ public class InteractionSystem : MonoBehaviour
         }
 
         return closest;
+    }
+
+    private string BuildMessage(IInteractable target)
+    {
+        _builder.Clear();
+
+        foreach (InteractionOption option in target.Options)
+        {
+            if (_builder.Length > 0) _builder.Append('\n');
+
+            _builder.Append(option.Key).Append(" - ").Append(option.Action);
+        }
+
+        return _builder.ToString();
     }
     #endregion
 

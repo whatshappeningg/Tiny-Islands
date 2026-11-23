@@ -7,9 +7,12 @@ public class EventSystem : MonoBehaviour
 	#endregion
 
 	#region Fields
-	[SerializeField] private RaftSensors _raft;
+	[SerializeField] private RaftSensors _raftSensors;
+	[SerializeField] private CannonController _cannon;
 	[SerializeField] private SharkController _shark;
 	[SerializeField] private GameModeController _gameModeController;
+	[SerializeField] private InteractionSystem _interactionSystem;
+	[SerializeField] private Inventory _inventory;
 
 	#endregion
 
@@ -17,7 +20,7 @@ public class EventSystem : MonoBehaviour
 	void Start()
 	{
 		_shark.OnAttack += OnTakeDamage;
-		_raft.OnChangeGameMode += OnChangeGameMode;
+		_interactionSystem.OnInteracted += OnInteracted;
 
 	}
 
@@ -29,7 +32,34 @@ public class EventSystem : MonoBehaviour
 	#region Private Methods
 	private void OnTakeDamage(float damage)
 	{
-		_raft.TakeDamage(damage);
+		_raftSensors.TakeDamage(damage);
+	}
+	private void OnInteracted(IInteractable target, InteractionOption option)
+	{
+		switch (option.Action)
+		{
+			case InteractionType.collect:
+				OnCollect(target);
+				break;
+			case InteractionType.embark:
+			case InteractionType.disembark:
+				OnChangeGameMode();
+				break;
+			case InteractionType.repair:
+				_raftSensors.Repair(5);
+				break;
+			case InteractionType.fire:
+				_cannon.CanFire();
+				break;
+		}
+	}
+	private void OnCollect(IInteractable target)
+	{
+		if (target is Recolectable recolectable)
+		{
+			_inventory.AddRecolectable(recolectable.Type, recolectable.Count);
+			Destroy(recolectable.gameObject);
+		}
 	}
 	private void OnChangeGameMode()
 	{

@@ -1,10 +1,9 @@
 using UnityEngine;
 using System;
 
-public class RaftSensors : MonoBehaviour, IInteractable
+public class RaftSensors : InteractableObject
 {
 	#region Properties
-	public event Action OnChangeGameMode;
 	public event Action<float> OnHealthChanged;
 	public float CurrentHealth
 	{
@@ -29,6 +28,7 @@ public class RaftSensors : MonoBehaviour, IInteractable
 	#endregion
 
 	#region Fields
+	[Header("Heatlh Settings")]
 	[SerializeField] private float _maxHealth = 100f;
 	[SerializeField] private float _currentHealth;
 
@@ -42,19 +42,7 @@ public class RaftSensors : MonoBehaviour, IInteractable
 	#endregion
 
 	#region Public Methods
-	public void Interact()
-	{
-		OnChangeGameMode?.Invoke();
-	}
-	public InteractableInfo GetInfo()
-	{
-		InteractableInfo info = new()
-		{
-			Action = "enter",
-			Type = "raft"
-		};
-		return info;
-	}
+
 	public void TakeDamage(float damage)
 	{
 		_currentHealth -= damage;

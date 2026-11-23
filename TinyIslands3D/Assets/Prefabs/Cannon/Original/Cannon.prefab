@@ -48,6 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18100029815aa149a4566f72228b111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 2
+  _options:
+  - Key: 101
+    Action: 1
   _impactPoint: {fileID: 0}
   _cannonball: {fileID: 7535097769009726137}
   _smokeParticles: {fileID: 2757952435247802351}

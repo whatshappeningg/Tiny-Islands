@@ -84,8 +84,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15546b2ded17d742a3eabefb21a85df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 0
+  _options:
+  - Key: 101
+    Action: 0
   <Count>k__BackingField: 1
-  <Type>k__BackingField: 0
 --- !u!65 &5650146300030703834
 BoxCollider:
   m_ObjectHideFlags: 0

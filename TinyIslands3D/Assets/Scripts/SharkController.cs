@@ -8,6 +8,7 @@ public class SharkController : MonoBehaviour
 {
 	#region Properties
 	public event Action<float> OnAttack;
+	public float DamageAmount => _attackDamage;
 
 	#endregion
 
@@ -91,7 +92,7 @@ public class SharkController : MonoBehaviour
 			_agent.SetDestination(FindRandomDestination(_movementRadius));
 		}
 
-		Debug.Log("Moving Shark");
+		//Debug.Log("Moving Shark");
 	}
 
 	private void ChaseMode()
@@ -104,7 +105,7 @@ public class SharkController : MonoBehaviour
 		_agent.speed += 0.2f * Time.deltaTime;
 		_agent.speed = Mathf.Clamp(_agent.speed, _sharkSpeed, 10f);
 
-		Debug.Log("Shark chasing");
+		//Debug.Log("Shark chasing");
 	}
 
 	private void AttackMode()
@@ -116,7 +117,7 @@ public class SharkController : MonoBehaviour
 
 		Attack();
 
-		Debug.Log("Shark Attacking");
+		//Debug.Log("Shark Attacking");
 	}
 
 	private void Attack()
