@@ -11,7 +11,6 @@ public class GameModeController : MonoBehaviour
 	[Header("Game Modes")]
 	[SerializeField] private GameObject _player;
 	[SerializeField] private GameObject _raft;
-	//[SerializeField] private InteractionSystem _interactionSystem;
 
 
 	private GameObject _playerCamera;
@@ -21,6 +20,8 @@ public class GameModeController : MonoBehaviour
 	private Animator _playerAnimator;
 
 	private RaftController _raftController;
+	[SerializeField] private GameObject _raftDocked;
+	[SerializeField] private GameObject _raftSailing;
 
 	private bool _isPlayerInRaft = false;
 
@@ -48,6 +49,9 @@ public class GameModeController : MonoBehaviour
 		_playerCharacterController.enabled = true;
 
 		_raftController.enabled = false;
+		_raftDocked.SetActive(true);
+		_raftSailing.SetActive(false);
+
 
 	}
 
@@ -63,7 +67,8 @@ public class GameModeController : MonoBehaviour
 		_playerCharacterController.enabled = !_playerCharacterController.enabled;
 
 		_raftController.enabled = !_raftController.enabled;
-		//_interactionSystem.enabled = false;
+		_raftDocked.SetActive(!_raftDocked.activeSelf);
+		_raftSailing.SetActive(!_raftSailing.activeSelf);
 
 		_isPlayerInRaft = !_isPlayerInRaft;
 
@@ -81,16 +86,10 @@ public class GameModeController : MonoBehaviour
 			_playerAnimator.SetBool("Sitting", false);
 		}
 
-		Invoke(nameof(EnableInteraction), 0.5f);
 	}
 	#endregion
 
 	#region Private Methods
-	private void EnableInteraction()
-	{
-		//_interactionSystem.enabled = true;
-	}
-
 	#endregion
 
 }

@@ -58,19 +58,16 @@ public class RaftController : MonoBehaviour
 			transform.Translate(step * Vector3.forward);
 		}
 
-		if (Input.GetKeyDown(KeyCode.LeftControl))
-		{
-			Dash();
-		}
+		// if (Input.GetKeyDown(KeyCode.LeftControl))
+		// {
+		// 	Dash();
+		// }
 	}
 
 	#endregion
 
 	#region Public Methods
-	#endregion
-
-	#region Private Methods
-	private void Dash()
+	public void Dash()
 	{
 		if (!isDashing)
 		{
@@ -80,7 +77,9 @@ public class RaftController : MonoBehaviour
 			Invoke(nameof(StopDash), dashDuration);
 		}
 	}
+	#endregion
 
+	#region Private Methods
 	private void StopDash()
 	{
 		isDashing = false;

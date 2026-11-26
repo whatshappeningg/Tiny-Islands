@@ -8,6 +8,7 @@ public class EventSystem : MonoBehaviour
 
 	#region Fields
 	[SerializeField] private RaftSensors _raftSensors;
+	[SerializeField] private RaftController _raftController;
 	[SerializeField] private CannonController _cannon;
 	[SerializeField] private SharkController _shark;
 	[SerializeField] private GameModeController _gameModeController;
@@ -40,6 +41,9 @@ public class EventSystem : MonoBehaviour
 		{
 			case InteractionType.collect:
 				OnCollect(target);
+				break;
+			case InteractionType.dash:
+				_raftController.Dash();
 				break;
 			case InteractionType.embark:
 			case InteractionType.disembark:

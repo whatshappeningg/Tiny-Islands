@@ -21,6 +21,7 @@ public enum InteractionType
     collect,
     fire,
     repair,
+    dash,
     embark,
     disembark,
 }

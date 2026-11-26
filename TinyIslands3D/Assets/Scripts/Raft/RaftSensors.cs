@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class RaftSensors : InteractableObject
+public class RaftSensors : MonoBehaviour
 {
 	#region Properties
 	public event Action<float> OnHealthChanged;
