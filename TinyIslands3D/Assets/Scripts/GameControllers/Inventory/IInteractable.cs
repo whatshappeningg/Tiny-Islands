@@ -30,6 +30,7 @@ public enum InteractionType
 public enum ObjectType
 {
     wood,
+    pearl,
     cannonball,
     cannon,
     raft,

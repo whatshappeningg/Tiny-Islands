@@ -42,18 +42,25 @@ public class EventSystem : MonoBehaviour
 			case InteractionType.collect:
 				OnCollect(target);
 				break;
+
 			case InteractionType.dash:
-				_raftController.Dash();
+				if (_inventory.UseResource(ObjectType.pearl))
+					_raftController.Dash();
 				break;
+
 			case InteractionType.embark:
 			case InteractionType.disembark:
 				OnChangeGameMode();
 				break;
+
 			case InteractionType.repair:
-				_raftSensors.Repair(5);
+				if (_inventory.UseResource(ObjectType.wood))
+					_raftSensors.Repair(5);
 				break;
+
 			case InteractionType.fire:
-				_cannon.CanFire();
+				if (_inventory.UseResource(ObjectType.cannonball))
+					_cannon.CanFire();
 				break;
 		}
 	}

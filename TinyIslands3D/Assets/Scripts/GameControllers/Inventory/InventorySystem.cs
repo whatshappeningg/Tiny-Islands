@@ -34,6 +34,8 @@ public class Inventory : MonoBehaviour
 		{
 			InventoryStack[type] -= count;
 			OnInventoryUpdated?.Invoke();
+			Debug.Log($"Current {type} count: {InventoryStack[type]}");
+
 			return true;
 		}
 
