@@ -66,10 +66,10 @@ public class EventSystem : MonoBehaviour
 	}
 	private void OnCollect(IInteractable target)
 	{
-		if (target is Recolectable recolectable)
+		if (target is Item item)
 		{
-			_inventory.AddRecolectable(recolectable.Type, recolectable.Count);
-			Destroy(recolectable.gameObject);
+			_inventory.AddRecolectable(item.Type, item.Count);
+			Destroy(item.gameObject);
 		}
 	}
 	private void OnChangeGameMode()

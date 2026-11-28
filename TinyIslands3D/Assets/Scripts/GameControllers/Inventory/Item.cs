@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 
 
-public class Recolectable : InteractableObject
+public class Item : InteractableObject
 {
     #region Properties
     [field: SerializeField] public int Count { get; set; }
